@@ -613,6 +613,3 @@ g_pfnVectors:
 
    .weak      MDIOS_IRQHandler            
    .thumb_set MDIOS_IRQHandler,Default_Handler   
-
-
- 

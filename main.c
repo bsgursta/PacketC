@@ -21,13 +21,9 @@
 
 #define LED_PIN 5
 
-void SystemInit(void) {}
-
 void _init(void) {}
 
-
-
-void main(void)
+int main(void)
 {
   *RCC_AHB1ENR |= (1 << RCC_AHB1ENR_GPIOAEN);
 
@@ -43,5 +39,5 @@ void main(void)
     *GPIOA_ODR ^= (1 << LED_PIN);
     for (uint32_t i = 0; i < 1000000; i++);
   }
-
+  return 0;
 }

@@ -1,6 +1,0 @@
-arm-none-eabi-gcc main.c startup.c -T STM32F767XX_FLASH.ld -o blink.elf -mcpu=cortex-m7 -mthumb -nostdlib -nostartfiles --specs=nosys.specs -g -O0
-
-openocd -f interface/stlink.cfg -f target/stm32f7x.cfg -c "program blink.elf verify reset exit"
-
-OPENOCD TELNET:
-$ telnet localhost 4444 (MSYS2)

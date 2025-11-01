@@ -1,0 +1,20 @@
+Run Instructions
+
+1) Compile startup code using gcc
+    $ arm-none-eabi-gcc -c startup/startup.c -o startup/startup.o -mcpu=cortex-m7 -mthumb -g -O0 -nostdlib -nostartfiles --specs=nosys.specs
+
+    $ arm-none-eabi-gcc -c startup/sys_stubs.c -o startup/sys_stubs.o -mcpu=cortex-m7 -mthumb -g -O0 -nostdlib -nostartfiles --specs=nosys.specs
+
+2) Compile c++ code
+    $ arm-none-eabi-g++ -c src/main.cpp -o startup/main.o -mcpu=cortex-m7 -mthumb -g -O0 -fno-exceptions -fno-rtti
+
+3)Link everything
+    $ arm-none-eabi-g++ startup/startup.o startup/main.o startup/sys_stubs.o -o packetcommand.elf -T STM32F767XX_FLASH.ld -mcpu=cortex-m7 -mthumb -nostdlib -nostartfiles --specs=nosys.specs
+
+    EXTRA: -Wl,-Map=blink.map
+
+--Flash code, no debugger
+openocd -f interface/stlink.cfg -f target/stm32f7x.cfg -c "program blink.elf verify reset exit"
+
+OPENOCD TELNET:
+$ telnet localhost 4444 (MSYS2)

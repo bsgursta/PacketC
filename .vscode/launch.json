@@ -6,7 +6,7 @@
     "configurations": [
         {
             "cwd": "${workspaceRoot}",
-            "executable": "blink.elf",
+            "executable": "packetcommand.elf",
             "name": "Debug with OpenOCD",
             "request": "launch",
             "type": "cortex-debug",

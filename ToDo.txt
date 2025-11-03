@@ -1,0 +1,1 @@
+- Discover CMSIS return macro or create my own

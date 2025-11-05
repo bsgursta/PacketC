@@ -7,10 +7,7 @@ void _init(void) {}
 
 int main(void)
 {
-  /* Enable Port A clock */
-  //*RCC_AHB1ENR |= (1 << RCC_AHB1ENR_GPIOAEN);
-
-  /* Enable PORTA clock */
+  /* Enable PORTB clock */
   RCC->AHB1ENR |= (1 << RCC_AHB1ENR_GPIOBEN_Pos);
 
   // do two dummy reads after enabling the peripheral clock, as per the errata
@@ -19,7 +16,6 @@ int main(void)
   dummy = RCC->AHB1ENR;
 
   /* Mode of the GPIO Pin*/
-  //*GPIOA_MODER |= (1 << GPIO_MODER_MODER5);
   GPIOB->MODER |= (1 << GPIO_MODER_MODER0_Pos);
   
   while(1)

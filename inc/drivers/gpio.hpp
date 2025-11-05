@@ -1,24 +1,15 @@
-/* PIN MACROS*/
-//switch to enum?
-#define PIN0   0
-#define PIN1   1
-#define PIN2   2
-#define PIN3   3
-#define PIN4   4
-#define PIN5   5
-#define PIN6   6
-#define PIN7   7
-#define PIN8   8
-#define PIN9   9
-#define PIN10 10
-#define PIN11 11
-#define PIN12 12
-#define PIN13 13
-#define PIN14 14
-#define PIN15 15
-
-/* MODER MACROS*/
+/* MODER */
 #define GPIO_INPUT_MODE  (00U)
 #define GPIO_OUTPUT_MODE (01U)
 #define GPIO_ALT_MODE    (10U)
 #define GPIO_ANALOG_MODE (11U)
+
+/* OTYPER */
+#define GPIO_OUTPUT_PUSHPULL (0U)
+#define GPIO_OUTPUT_OPENDRAIN (1U)
+
+/* OSPEEDR */
+#define GPIO_LOWSPEED       (00U)
+#define GPIO_MEDIUMSPEED    (01U)
+#define GPIO_HIGHSPEED      (10U)
+#define GPIO_VERYHIGHSPEED  (11U)

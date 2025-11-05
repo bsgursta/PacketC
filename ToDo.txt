@@ -1,1 +1,2 @@
-- Discover CMSIS return macro or create my own
+- Create general functions to check pins
+- have check to ensure register changed

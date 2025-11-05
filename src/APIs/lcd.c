@@ -1,8 +1,6 @@
 //used to program BuyDisplay OLEDs
 
-#include <lcd.h>
-#include "main.h"
-#include "stm32f7xx_hal.h"
+#include "lcd.h"
 
 HAL_StatusTypeDef lcd_transfer(uint8_t data){
 	//pull CS low

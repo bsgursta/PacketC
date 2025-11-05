@@ -2,6 +2,7 @@
 /* Initially developed for F7 family/M7 */
 
 #include "gpio.hpp"
+#include "macros.hpp"
 #include "stm32f767xx.h"
 
 /* TEMP USEFUL FUNCTIONS */
@@ -20,22 +21,32 @@ int checkPinValid(uint8_t pin_num) {
 /* GPIOx_MODER
     USE CASE: configre gpio input/output, alternate function(Serial protocol), analog mode
 */
-void gpioMODERset(GPIO_TypeDef *port, uint8_t pin,uint8_t mode) {
+StatusType gpioMODERset(GPIO_TypeDef *port, uint8_t pin,uint8_t mode) {
     //check pin valid
-    if(!checkPinValid(pin)) return 0; //SWAP TO WHATEVER I DECIDE
+    if(!checkPinValid(pin)) return STATUS_ERR;
     port->MODER |= (mode << (2*pin));
-    return 1; //SWAP TO VALUE
+
+    //add check to make sure pin was set
+    return STATUS_OK;
 }
 
 /* GPIOx_OTYPER 
         USE CASE: change output type: push/pull (SPI) OR open_drain (I2C)
 */
-void gpioOTYPERset() {}
+StatusType gpioOTYPERset(GPIO_TypeDef *port, uint8_t pin, uint8_t out_type) {
+        if(!checkPinValid(pin)) return STATUS_ERR;
+        port->OTYPER |= (out_type << pin);
+        return STATUS_OK;
+}
 
 /* GPIOx_OSPEEDR
         USE CASE: Configure I/O output speed
 */
-void gpioOSPEEDRset() {}
+StatusType gpioOSPEEDRset(GPIO_TypeDef *port, uint8_t pin, uint8_t speed) {
+        if(!checkPinValid(pin)) return STATUS_ERR;
+        port->OTYPER |= (speed << (2*pin));
+        return STATUS_OK;
+} 
 
 /*  GPIOx_PUPDR
         USE CASE: Configure I/O default logic
@@ -44,27 +55,27 @@ void gpioOSPEEDRset() {}
 /*  GPIOx_IDR
         USE CASE: Read bits from corresponding input port/pin
 */
-void gpioIDRread() {}
+StatusType gpioIDRread() {}
 
 
 //CONSIDER : maybe make two separate functions
 /*  GPIOx_ODR
         USE CASE: Set output state and read its state 
 */
-void gpioODRreadwrite() {}
+StatusType gpioODRreadwrite() {}
 
 /*  GPIOx_BSRR
         USE CASE: Reset OR Set/Reset Pins
 */
-void gpioBSRRset() {}
+StatusType gpioBSRRset() {}
 
 /*  GPIOx_LCKR
         USE CASE: Lock all/specific registers to values
 */
 
-void gpioLCKRset() {}
+StatusType gpioLCKRset() {}
 
 /*  GPIOx_AFRH & GPIOx_AFRGL
         USE CASE: Set specific uses for alternative functions
 */
-void gpioAFRHLset() {}
+StatusType gpioAFRHLset() {}

@@ -2,124 +2,200 @@
 #include "spi.hpp"
 #include "stm32f767xx.h"
 
+/* File contains the function implementations for SPI/I2S registers */
+
+/* Check which port is being used and get the current value */
+uint32_t getSPIClockFreq(SPI_TypeDef *port) {
+    //Default clock HSI is 16 MHz
+
+    //APB2 Clock -> High Speed
+    if(port == SPI1 || port == SPI4 || port == SPI5 || port == SPI6) {
+        
+    }
+    //APB1 Clock -> Low Speed
+    else if( port == SPI3 || port == SPI2) {
+
+    }
+    else {
+
+    }
+
+}
+
+bool checkBinary(uint8_t number) {
+    if(number == 1 || number == 0) {
+        return true;
+    }
+    return false;
+}
+
 //Steps
 
 // 1) Set GPIO registers 2) Write to SPI_CR1 register 3) Write to SPI_CR2 register 4) Write to CRCPR register 5) Configure DMA
 
-/*
-    SPIx_CR1
+/* SPIx_CR1 */
 
-    spiCPHAset() -> sets whether the data is captured at the first or second clock edge
-    spiCPOLset() -> sets the clock idle value
-    spiMSTRset() -> sets spi peripheral to either master or slave
-    spiBRset() -> sets the Baud Rate for spi peripheral
-    spiSPEset() -> enables the SPI peripheral
-    spiLSBFIRSTset() -> RX/TX with LSB or MSB first
-    spiRXONLYset() -> master to receive only
-    spiCRCLset() -> sets the CRC length, 8 OR 16 bit
-    spiCRCNEXTset() -> ???
-    spiCRCENset() -> enable/disable CRC calculation
-    spiBIDIOEset() -> 
-    spiBIDIMODEset() ->
-*/
-StatusType spiCPHAset() {
-
+//sets whether the data is captured at the first or second clock edge 
+StatusType spiCPHAset(SPI_TypeDef* spi_mod, uint8_t edge) {
+    if(!checkBinary(edge)) return STATUS_ERR;
+    spi_mod -> CR1 |= (edge << 0);
+    return STATUS_OK;
 }
 
-StatusType spiCPOLset() {
-
+//sets the clock idle value
+StatusType spiCPOLset(SPI_TypeDef* spi_mod, uint8_t clk_pol) {
+    if(!checkBinary(clk_pol)) return STATUS_ERR;
+    spi_mod -> CR1 |= (clk_pol << 1);
+    return STATUS_OK;
 }
 
-StatusType spiMSTRset() {
-
+//sets spi peripheral to either master or slave
+StatusType spiMSTRset(SPI_TypeDef* spi_mod, uint8_t mst_set) {
+    if(!checkBinary(mst_set)) return STATUS_ERR;
+    spi_mod -> CR1 |= (mst_set << 2);
+    return STATUS_OK;
 }
 
-StatusType spiBRset() {
-
+//sets the Baud Rate for spi peripheral
+StatusType spiBRset(SPI_TypeDef* spi_mod, uint8_t baud_rate ) {
+    if(baud_rate >= 8) return STATUS_ERR;
+    spi_mod -> CR1 |= (baud_rate << 3);
+    return STATUS_OK;
 }
 
-StatusType spiSPEset() {
-
+//enables the SPI peripheral
+StatusType spiSPEset(SPI_TypeDef* spi_mod, uint8_t state) {
+    if(!checkBinary(state)) return STATUS_ERR;
+    spi_mod -> CR1 |= (state << 6);
+    return STATUS_OK;
 }
 
-StatusType spiLSBFIRSTset() {
-
+//RX/TX with LSB or MSB first
+StatusType spiLSBFIRSTset(SPI_TypeDef* spi_mod, uint8_t format) {
+        if(!checkBinary(format)) return STATUS_ERR;
+    spi_mod -> CR1 |= (format << 7);
+    return STATUS_OK;
 }
 
-StatusType spiRXONLYset() {
-
+//master to receive only or full duplex
+StatusType spiSSMset(SPI_TypeDef* spi_mod, uint8_t state) {
+    if(!checkBinary(state)) return STATUS_ERR;
+    spi_mod -> CR1 |= (state << 9);
+    return STATUS_OK;
 }
 
-StatusType spiCRCLset() {
-
+//sets the CRC length, 8 OR 16 bit
+StatusType spiRXONLYset(SPI_TypeDef* spi_mod, uint8_t mode) {
+    if(!checkBinary(mode)) return STATUS_ERR;
+    spi_mod -> CR1 |= (mode << 10);
+    return STATUS_OK;
 }
 
-StatusType spiCRCNEXTset() {
-
+StatusType spiCRCLset(SPI_TypeDef* spi_mod, uint8_t length) {
+    if(!checkBinary(length)) return STATUS_ERR;
+    spi_mod -> CR1 |= (length << 11);
+    return STATUS_OK;
 }
 
-StatusType spiCRCENset() {
-
+StatusType spiCRCNEXTset(SPI_TypeDef* spi_mod, uint8_t next) {
+    if(!checkBinary(next)) return STATUS_ERR;
+    spi_mod -> CR1 |= (next << 12);
+    return STATUS_OK;
 }
 
-StatusType spiBIDIOEset() {
-
+//enable/disable CRC calculation
+StatusType spiCRCENset(SPI_TypeDef* spi_mod, uint8_t value) {
+    if(!checkBinary(value)) return STATUS_ERR;
+    spi_mod -> CR1 |= (value << 13);
+    return STATUS_OK;
 }
 
-StatusType spiBIDIMODEset() {
+StatusType spiBIDIOEset(SPI_TypeDef* spi_mod, uint8_t calc) {
+    if(!checkBinary(calc)) return STATUS_ERR;
+    spi_mod -> CR1 |= (calc << 14);
+    return STATUS_OK;
+}
 
+StatusType spiBIDIMODEset(SPI_TypeDef* spi_mod, uint8_t mode) {
+    if(!checkBinary(mode)) return STATUS_ERR;
+    spi_mod -> CR1 |= (mode << 13);
+    return STATUS_OK;
 }
 
 /*
     SPIx_CR2 Register
 
 */
-StatusType spiRXDMAENset() {
-
+StatusType spiRXDMAENset(SPI_TypeDef* spi_mod, uint8_t en) {
+    if(!checkBinary(en)) return STATUS_ERR;
+    spi_mod -> CR2 |= (en << 0);
+    return STATUS_OK;
 }
 
-StatusType spiTXMAENset() {
-
+StatusType spiTXMAENset(SPI_TypeDef* spi_mod, uint8_t en) {
+    if(!checkBinary(en)) return STATUS_ERR;
+    spi_mod -> CR2 |= (en << 1);
+    return STATUS_OK;
 }
 
-StatusType spiSSOEset() {
-
+StatusType spiSSOEset(SPI_TypeDef* spi_mod, uint8_t en) {
+    if(!checkBinary(en)) return STATUS_ERR;
+    spi_mod -> CR2 |= (en << 2);
+    return STATUS_OK;
 }
 
-StatusType spiNSSPset() {
-
+StatusType spiNSSPset(SPI_TypeDef* spi_mod, uint8_t pulse) {
+    if(!checkBinary(pulse)) return STATUS_ERR;
+    spi_mod -> CR2 |= (pulse << 3);
+    return STATUS_OK;
 }
 
-StatusType spiFRFset() {
-
+StatusType spiFRFset(SPI_TypeDef* spi_mod, uint8_t format) {
+    if(!checkBinary(format)) return STATUS_ERR;
+    spi_mod -> CR2 |= (format << 4);
+    return STATUS_OK;
 }
 
-StatusType spiERRIEset() {
-
+StatusType spiERRIEset(SPI_TypeDef* spi_mod, uint8_t en_int) {
+    if(!checkBinary(en_int)) return STATUS_ERR;
+    spi_mod -> CR2 |= (en_int << 5);
+    return STATUS_OK;
 }
 
-StatusType spiRXNEIEset() {
-
+StatusType spiRXNEIEset(SPI_TypeDef* spi_mod, uint8_t en) {
+    if(!checkBinary(en)) return STATUS_ERR;
+    spi_mod -> CR2 |= (en << 6);
+    return STATUS_OK;
 }
 
-StatusType spiTXEIEset() {
-
+StatusType spiTXEIEset(SPI_TypeDef* spi_mod, uint8_t en) {
+    if(!checkBinary(en)) return STATUS_ERR;
+    spi_mod -> CR2 |= (en << 7);
+    return STATUS_OK;
 }
 
-StatusType spiDSset() {
-
+StatusType spiDSset(SPI_TypeDef* spi_mod, uint8_t size) {
+    if(size >= 16 ) return STATUS_ERR;
+    spi_mod -> CR2 |= (size << 8);
+    return STATUS_OK;
 }
 
-StatusType spiFRXTHset() {
-
+StatusType spiFRXTHset(SPI_TypeDef* spi_mod, uint8_t thresh) {
+    if(!checkBinary(thresh)) return STATUS_ERR;
+    spi_mod -> CR2 |= (thresh << 12);
+    return STATUS_OK;
 }
 
-StatusType spiLDMA_RXset() {
-
+StatusType spiLDMA_RXset(SPI_TypeDef* spi_mod, uint8_t type) {
+    if(!checkBinary(type)) return STATUS_ERR;
+    spi_mod -> CR2 |= (type << 13);
+    return STATUS_OK;
 }
 
-StatusType spiLDMA_TXset() {
-
+StatusType spiLDMA_TXset(SPI_TypeDef* spi_mod, uint8_t type) {
+    if(!checkBinary(type)) return STATUS_ERR;
+    spi_mod -> CR2 |= (type << 14);
+    return STATUS_OK;
 }
 
 /*

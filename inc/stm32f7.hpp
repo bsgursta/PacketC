@@ -1,0 +1,1 @@
+#define defaultClock 16000000UL 

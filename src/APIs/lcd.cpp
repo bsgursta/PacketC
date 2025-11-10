@@ -1,8 +1,8 @@
 //used to program BuyDisplay OLEDs
+#include "lcd.hpp"
+#include "macros.hpp"
 
-#include "lcd.h"
-
-HAL_StatusTypeDef lcd_transfer(uint8_t data){
+StatusType lcd_transfer(uint8_t data){
 	//pull CS low
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_RESET);
 
@@ -20,7 +20,7 @@ HAL_StatusTypeDef lcd_transfer(uint8_t data){
 }
 
 //Reset lcd settings
-HAL_StatusTypeDef lcd_reset(void){
+StatusType lcd_reset(void){
 	//pull RES pin down
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
 
@@ -31,7 +31,7 @@ HAL_StatusTypeDef lcd_reset(void){
 }
 
 //turn LCD on to match RAM data
-HAL_StatusTypeDef  onLCD(void){
+StatusType  onLCD(void){
 
 	//lcd on data
 	uint8_t data = 0xAF;
@@ -45,7 +45,7 @@ HAL_StatusTypeDef  onLCD(void){
 }
 
 //force all pixels on screen to turn on
-HAL_StatusTypeDef  lcd_ALLpixels(void){
+StatusType  lcd_ALLpixels(void){
 
 	//lcd on data
 	uint8_t data = 0xA5;
@@ -59,7 +59,7 @@ HAL_StatusTypeDef  lcd_ALLpixels(void){
 }
 
 //only display pixels saved in RAM when lcd ON
-HAL_StatusTypeDef  lcd_RAMpixels(void){
+StatusType  lcd_RAMpixels(void){
 
 	//lcd on data
 	uint8_t data = 0xA4;
@@ -73,7 +73,7 @@ HAL_StatusTypeDef  lcd_RAMpixels(void){
 
 
 //turn lcd OFF
-HAL_StatusTypeDef  offLCD(void){
+StatusType  offLCD(void){
 
 	//lcd off data
 	uint8_t data = 0xAE;
@@ -88,7 +88,7 @@ HAL_StatusTypeDef  offLCD(void){
 
 
 //set page(horizontal) addressing after R/W a byte of SPI data
-HAL_StatusTypeDef setPageaddressing(){
+StatusType setPageaddressing(){
 	uint8_t data = 0x20;
 
 	//pull A0 low (PD7)
@@ -98,7 +98,7 @@ HAL_StatusTypeDef setPageaddressing(){
 }
 
 //set vertical addressing after R/W a byte of SPI data
-HAL_StatusTypeDef setVerticaladdressing(){
+StatusType setVerticaladdressing(){
 
 	uint8_t data = 0x21;
 
@@ -112,7 +112,7 @@ HAL_StatusTypeDef setVerticaladdressing(){
 
 //set the page address for writing pixels
 //page number must be between 0-15
-HAL_StatusTypeDef  lcd_setpage_address(int page_num){
+StatusType  lcd_setpage_address(int page_num){
 
 	//convert int to uint8
 	uint8_t pg_num = page_num;
@@ -127,7 +127,7 @@ HAL_StatusTypeDef  lcd_setpage_address(int page_num){
 
 //set the column address for writing pixels
 // must be between 0 and 127, there are 128 columns
-HAL_StatusTypeDef  lcd_setcolumn_address(int column_num){
+StatusType  lcd_setcolumn_address(int column_num){
 
 	if(column_num >= 128 || column_num < 0){
 		return HAL_ERROR;
@@ -154,11 +154,11 @@ HAL_StatusTypeDef  lcd_setcolumn_address(int column_num){
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef lcd_writeRAM(uint8_t data){
+StatusType lcd_writeRAM(uint8_t data){
 	//pull A0 high
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_7, GPIO_PIN_SET);
 
-	HAL_StatusTypeDef status = lcd_transfer(data);
+	StatusType status = lcd_transfer(data);
 
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_7, GPIO_PIN_RESET);
 
@@ -168,7 +168,7 @@ HAL_StatusTypeDef lcd_writeRAM(uint8_t data){
 //initialize SPI protocol with 4 wire setup
 //includes SCL,SI,A0, and /CS
 //Pins: PB10 -> SCK, PC3 -> SI(MOSI), RES -> PC0, A0(D/C) -> PD7, CS -> PD6
-HAL_StatusTypeDef lcd_4SPI_init(){
+StatusType lcd_4SPI_init(){
 	//pull CS high
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
 
@@ -188,7 +188,7 @@ HAL_StatusTypeDef lcd_4SPI_init(){
 }
 
 //set the entirety of the screen to 0, wiping the screen.
-HAL_StatusTypeDef  clearLCD(void){
+StatusType  clearLCD(void){
 
 	int errors = 0;
 
@@ -223,7 +223,7 @@ HAL_StatusTypeDef  clearLCD(void){
 }
 
 //fill the LCD with 1 bits, making it turn off. Include delay for visual assistance
-HAL_StatusTypeDef  fillLCD(void){
+StatusType  fillLCD(void){
 
 	int errors = 0;
 
@@ -248,7 +248,7 @@ HAL_StatusTypeDef  fillLCD(void){
 }
 
 //print HELLO message
-HAL_StatusTypeDef lcd_printHELLO(void){
+StatusType lcd_printHELLO(void){
 	int errors = 0;
 
 	lcd_setpage_address(1);

@@ -1,3 +1,5 @@
+#pragma once
+
 /* MODER */
 #define GPIO_INPUT_MODE  (00U)
 #define GPIO_OUTPUT_MODE (01U)

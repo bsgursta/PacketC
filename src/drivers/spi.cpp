@@ -203,77 +203,135 @@ StatusType spiLDMA_TXset(SPI_TypeDef* spi_mod, uint8_t type) {
 
 */
 
-StatusType spiRXNEread() {
-
-}
-StatusType spiRXEread() {
-    
-}
-StatusType spiCHSIDEread() {
-    
-}
-StatusType spiUDRread() {
-    
-}
-StatusType spiCRCERRread() {
-    
-}
-StatusType spiMODFread() {
-    
-}
-StatusType spiOVRread() {
-    
-}
-StatusType spiBSYread() {
-    
-}
-StatusType spiFREread() {
-    
-}
-StatusType spiFRLVLread() {
-    
-}
-StatusType spiFTLVLread() {
-    
+//Check whether the receive buffer is empty
+bool spiRXNE_bufferEmpty(SPI_TypeDef* spi_mod) {
+    return !(spi_mod->SR & ( 1 << 0)); 
 }
 
-/* 
-SPIx_I2SCFGR
+//Check whether the transmit buffer is empty
+bool spiTXNE_bufferEmpty(SPI_TypeDef* spi_mod) {
+    return !(spi_mod->SR & ( 1 << 1)); 
+}
+
+// I2S -> use to determine which side has to be transmitted
+/* Return values:   1 -> Right side is ready
+                    0 -> Left side is ready
+*/
+int spiCHSIDEread(SPI_TypeDef* spi_mod) {
+    if(spi_mod->SR & ( 1 << 3)) {
+        return 1;
+    } 
+    return 0;
+}
+//I2S -> check if underrun occured
+
+bool spiUDR_underOccur(SPI_TypeDef* spi_mod) {
+    return (spi_mod->SR & ( 1 << 3)); 
+}
+
+// CRC value doesn't match the SPIx_CRCR value
+
+//clear with software LATER???
+
+bool spiCRCERR_matches(SPI_TypeDef* spi_mod) {
+    return !(spi_mod->SR & ( 1 << 4)); 
+}
+// Use to check if another devices is attempting to take control of the bus
+
+bool spiMODF_faultOccured(SPI_TypeDef* spi_mod) {
+    return (spi_mod->SR & ( 1 << 5)); 
+}
+
+//Flag indicates -> new data has been received before the previous data was sent
+
+bool spiOVRflag(SPI_TypeDef* spi_mod) {
+    return (spi_mod->SR & ( 1 << 6)); 
+}
+//Flag indicates that SPI/I2S is busy communicating or TX is not empty
+
+bool spiBSYflag(SPI_TypeDef* spi_mod) {
+    return (spi_mod->SR & ( 1 << 7));     
+}/* Slave mode flag
+    Check if there is a frame format error from receiving data
+    1 -> Format Error   0 -> No Format Error
+ */
+bool spiFREflag(SPI_TypeDef* spi_mod) {
+        return (spi_mod->SR & ( 1 << 6)); 
+}
+
+//Tells us the capacity of the FIFO which stores reception data
+int spiFRLVLread(SPI_TypeDef* spi_mod) {
+    
+}
+//Tells us the current size of the transmission buffer
+
+StatusType spiFTLVLread(SPI_TypeDef* spi_mod) {
+    
+}
+
+/* SPIx_DR -> Data Register */
+uint16_t getSPIDRval(SPI_TypeDef* spi_mod) {
+    return (spi_mod->DR & (0xFFFF));
+}
+
+/*  SPIx_CRCPR -> CRC Register 
+    Default -> 0x0007
 */
 
-StatusType spiCHLENset() {
+uint16_t getCRCval(SPI_TypeDef* spi_mod) {
+    return (spi_mod->CRCPR & (0xFFFF));
+}
+
+/*  SPIx_RXCRCR -> CRC Value */
+
+uint16_t getCRCvalRX(SPI_TypeDef* spi_mod) {
+    return (spi_mod->RXCRCR & (0xFFFF));
+}
+
+/*  SPIx_TXCRCR -> CRC Value */
+
+uint16_t getCRCvalTX(SPI_TypeDef* spi_mod) {
+    return (spi_mod->TXCRCR & (0xFFFF));
+}
+
+
+/* SPIx_I2SCFGR */
+
+//Set the number of bits per audio channel
+
+StatusType spiCHLENset(SPI_TypeDef* spi_mod) {
 
 }
 
-StatusType spiDATLENset() {
+StatusType spiDATLENset(SPI_TypeDef* spi_mod) {
 
 }
 
-StatusType spiCKPOLset() {
+StatusType spiCKPOLset(SPI_TypeDef* spi_mod) {
 
 }
 
-StatusType spiI2SSTDset() {
+StatusType spiI2SSTDset(SPI_TypeDef* spi_mod) {
 
 }
 
-StatusType spiPCMSYNCset() {
+StatusType spiPCMSYNCset(SPI_TypeDef* spi_mod) {
 
 }
 
-StatusType spiI2SCFGset() {
+StatusType spiI2SCFGset(SPI_TypeDef* spi_mod) {
     
 }
 
-StatusType spiI2SEset() {
+StatusType spiI2SEset(SPI_TypeDef* spi_mod) {
 
 }
 
-StatusType spiI2SMODset() {
+StatusType spiI2SMODset(SPI_TypeDef* spi_mod) {
 
 }
 
-StatusType spiASTRTENset() {
+StatusType spiASTRTENset(SPI_TypeDef* spi_mod) {
 
 }
 

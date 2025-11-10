@@ -18,6 +18,6 @@
 
 /* Status Values*/
 typedef enum {
-    STAT_OK = 0x00,
-    STAT_ERR = 0x01
+    STATUS_OK = 0x00,
+    STATUS_ERR = 0x01
 } StatusType;

@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "LinuxMint",
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src",
@@ -10,16 +10,22 @@
                 "${workspaceFolder}/vendor/CMSIS/CMSIS/Core/Include"
             ],
             "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
+                "STM32F7",     
+                "_DEBUG"
             ],
             "windowsSdkVersion": "10.0.26100.0",
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "${default}",
-            "configurationProvider": "nordic-semiconductor.nrf-connect",
-            "compilerPath": "C:/msys64/mingw64/bin/arm-none-eabi-gcc.exe"
+            "compilerPath": "/opt/st/stm32cubeclt_1.19.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/src",
+                    "${workspaceFolder}/vendor",
+                    "${workspaceFolder}/inc"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
         }
     ],
     "version": 4

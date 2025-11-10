@@ -1,3 +1,4 @@
+#pragma once
 /* PIN MACROS*/
 #define PIN0   0
 #define PIN1   1

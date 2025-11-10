@@ -1,6 +1,16 @@
 #pragma once
 
-#include "macros.hpp"
+#include "general.hpp"
+#include <stm32f767xx.h>
+#include "spi.hpp"
+
+class LCDModule {
+    private:
+        SPIModule spiMOD;
+
+    public:
+
+};
 
 //4-wire SPI
 

@@ -1,10 +1,12 @@
 #include "macros.hpp"
 #include "spi.hpp"
 #include "stm32f767xx.h"
+#include <stdint.h>
 
 /* File contains the function implementations for SPI/I2S registers */
 
-/* Check which port is being used and get the current value */
+/*
+/ Check which port is being used and get the current value
 uint32_t getSPIClockFreq(SPI_TypeDef *port) {
     //Default clock HSI is 16 MHz
 
@@ -21,28 +23,23 @@ uint32_t getSPIClockFreq(SPI_TypeDef *port) {
     }
 
 }
-
-bool checkBinary(uint8_t number) {
-    if(number == 1 || number == 0) {
-        return true;
-    }
-    return false;
-}
+*/
 
 //Steps
 
 // 1) Set GPIO registers 2) Write to SPI_CR1 register 3) Write to SPI_CR2 register 4) Write to CRCPR register 5) Configure DMA
 
+
 /* SPIx_CR1 */
 
-//sets whether the data is captured at the first or second clock edge 
+//Sets whether the data is captured at the first or second clock edge 
 StatusType spiCPHAset(SPI_TypeDef* spi_mod, uint8_t edge) {
     if(!checkBinary(edge)) return STATUS_ERR;
     spi_mod -> CR1 |= (edge << 0);
     return STATUS_OK;
 }
 
-//sets the clock idle value
+//Sets the clock idle logic
 StatusType spiCPOLset(SPI_TypeDef* spi_mod, uint8_t clk_pol) {
     if(!checkBinary(clk_pol)) return STATUS_ERR;
     spi_mod -> CR1 |= (clk_pol << 1);

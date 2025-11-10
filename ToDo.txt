@@ -1,3 +1,4 @@
 - Create general functions to check pins
 - have check to ensure register changed
 -WATCH for size in set function
+- Ensure that the general functions are created

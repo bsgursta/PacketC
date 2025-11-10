@@ -1,5 +1,21 @@
 #pragma once
 
+#include "stm32f767xx.h"
+
+/* Custom SPI Implementations*/
+
+class SPIModule {
+private:    
+    SPI_TypeDef* spi_mod;
+    int num_devices;
+
+public:
+    StatusType initializeDefault();
+    StatusType getInfo(USART_TypeDef);
+};
+
+/* Baremetal SPI/I2S Macros & Prototypes */
+
 /* SPI Macros */
 #define SPI_CPHA_FIRST_CLOCK  (0U)
 #define SPI_CPHA_SECOND_CLOCK (1U)

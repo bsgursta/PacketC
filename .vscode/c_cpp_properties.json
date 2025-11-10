@@ -4,7 +4,7 @@
             "name": "LinuxMint",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src",
+                "${workspaceFolder}/inc",
                 "${workspaceFolder}/startup",
                 "${workspaceFolder}/vendor/CMSIS/Device/ST/STM32F7/Include",
                 "${workspaceFolder}/vendor/CMSIS/CMSIS/Core/Include"

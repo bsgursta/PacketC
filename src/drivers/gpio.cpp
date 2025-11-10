@@ -2,19 +2,8 @@
 /* Initially developed for F7 family/M7 */
 
 #include "gpio.hpp"
-#include "macros.hpp"
+#include "general.hpp"
 #include "stm32f767xx.h"
-
-/* TEMP USEFUL FUNCTIONS */
-
-//Check if pin is valid
-int checkPinValid(uint8_t pin_num) {
-    if(pin_num > 15 || pin_num < 0) {
-        return 0;
-    }
-    return 1;
-}
-
 
 // The following functions have functionality for PORTS A-K
 

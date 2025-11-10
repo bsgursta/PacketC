@@ -1,4 +1,7 @@
 #pragma once
+
+#include "stdint.h"
+
 /* PIN MACROS*/
 #define PIN0   0
 #define PIN1   1
@@ -22,3 +25,6 @@ typedef enum {
     STATUS_OK = 0x00,
     STATUS_ERR = 0x01
 } StatusType;
+
+/* Function Prototypes */
+int checkPinValid(uint8_t pin_num);

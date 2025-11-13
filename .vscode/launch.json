@@ -12,13 +12,12 @@
             "type": "cortex-debug",
             "servertype": "openocd",
             "configFiles": [
-                "C:/msys64/mingw64/share/openocd/scripts/interface/stlink-v2-1.cfg", 
-                "C:/msys64/mingw64/share/openocd/scripts/target/stm32f7x.cfg"
+                "/usr/share/openocd/scripts/interface/stlink-v2-1.cfg", 
+                "/usr/share/openocd/scripts/target/stm32f7x.cfg"
             ],
             "searchDir": [],
             "runToEntryPoint": "main",
             "showDevDebugOutput": "none",
-            "serverpath": "C:/msys64/mingw64/bin/openocd.exe",
         },
     ]
 }
